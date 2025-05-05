@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Login - Cooking Master</title>
+        <h:outputStylesheet name="css/styles.css"/>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f8f9fa;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+            }
+            .login-container {
+                background: white;
+                padding: 40px;
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                width: 100%;
+                max-width: 400px;
+            }
+            .login-title {
+                text-align: center;
+                color: #ff6b6b;
+                margin-bottom: 30px;
+                font-size: 2em;
+            }
+            .form-group {
+                margin-bottom: 20px;
+            }
+            .form-label {
+                display: block;
+                margin-bottom: 8px;
+                color: #333;
+                font-weight: bold;
+            }
+            .form-input {
+                width: 100%;
+                padding: 12px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 1em;
+                box-sizing: border-box;
+            }
+            .form-input:focus {
+                outline: none;
+                border-color: #ff6b6b;
+            }
+            .login-button {
+                width: 100%;
+                padding: 12px;
+                background-color: #ff6b6b;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 1em;
+                font-weight: bold;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+            .login-button:hover {
+                background-color: #ff8e8e;
+            }
+            .error-message {
+                color: #ff6b6b;
+                text-align: center;
+                margin-bottom: 20px;
+                font-size: 0.9em;
+            }
+            .register-text {
+                display: block;
+                text-align: center;
+                margin-top: 20px;
+                color: #ff6b6b;
+                font-weight: bold;
+                text-decoration: none;
+            }
+            .register-text:hover {
+                text-decoration: underline;
+            }
+            .success-message {
+                color: #28a745;
+                text-align: center;
+                margin-bottom: 20px;
+                font-size: 0.9em;
+            }
+        </style>
+    </h:head>
+    <h:body styleClass="auth-page">
+        <div class="login-container">
+            <h1 class="login-title">Login</h1>
+            
+            <h:messages globalOnly="true" styleClass="error-message"/>
+            
+            <h:outputText value="Registration successful! Please login." 
+                         rendered="#{param.registered != null}" 
+                         styleClass="success-message"/>
+            
+            <h:form id="loginForm">
+                <div class="form-group">
+                    <h:outputLabel for="username" value="Username" styleClass="form-label"/>
+                    <h:inputText id="username" value="#{userBean.username}" styleClass="form-input" required="true" requiredMessage="Username is required"/>
+                    <h:message for="username" styleClass="error-message"/>
+                </div>
+                
+                <div class="form-group">
+                    <h:outputLabel for="password" value="Password" styleClass="form-label"/>
+                    <h:inputSecret id="password" value="#{userBean.password}" styleClass="form-input" required="true" requiredMessage="Password is required"/>
+                    <h:message for="password" styleClass="error-message"/>
+                </div>
+                
+                <h:commandButton value="Login" action="#{userBean.login}" styleClass="login-button"/>
+            </h:form>
+            
+            <h:link value="Register Now" outcome="register" styleClass="register-text"/>
+        </div>
+    </h:body>
+</html> 

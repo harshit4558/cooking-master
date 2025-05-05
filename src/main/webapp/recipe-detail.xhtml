@@ -1,0 +1,231 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Recipe Details - Cooking Master</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f8f9fa;
+            }
+            .header {
+                background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+                color: white;
+                padding: 20px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .header-content {
+                max-width: 1200px;
+                margin: 0 auto;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .logo {
+                font-size: 1.5em;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .logo i {
+                font-size: 1.2em;
+            }
+            .nav-links {
+                display: flex;
+                gap: 20px;
+            }
+            .nav-link {
+                color: white;
+                text-decoration: none;
+                padding: 8px 16px;
+                border-radius: 20px;
+                transition: background-color 0.3s ease;
+                cursor: pointer;
+            }
+            .nav-link:hover {
+                background-color: rgba(255,255,255,0.2);
+            }
+            .main-content {
+                max-width: 800px;
+                margin: 40px auto;
+                padding: 0 20px;
+            }
+            .recipe-header {
+                background: white;
+                border-radius: 10px;
+                padding: 30px;
+                margin-bottom: 30px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .recipe-title {
+                font-size: 2.5em;
+                color: #333;
+                margin-bottom: 10px;
+            }
+            .recipe-meta {
+                display: flex;
+                gap: 20px;
+                color: #666;
+                margin-bottom: 20px;
+            }
+            .meta-item {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+            .recipe-description {
+                color: #666;
+                font-size: 1.1em;
+                line-height: 1.6;
+                margin-bottom: 20px;
+            }
+            .recipe-section {
+                background: white;
+                border-radius: 10px;
+                padding: 30px;
+                margin-bottom: 30px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .section-title {
+                font-size: 1.5em;
+                color: #333;
+                margin-bottom: 20px;
+                padding-bottom: 10px;
+                border-bottom: 2px solid #ff6b6b;
+            }
+            .ingredients-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+            .ingredients-list li {
+                padding: 10px 0;
+                border-bottom: 1px solid #eee;
+                color: #666;
+            }
+            .ingredients-list li:last-child {
+                border-bottom: none;
+            }
+            .instructions-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                counter-reset: step-counter;
+            }
+            .instructions-list li {
+                padding: 15px 0;
+                border-bottom: 1px solid #eee;
+                color: #666;
+                position: relative;
+                padding-left: 40px;
+            }
+            .instructions-list li:last-child {
+                border-bottom: none;
+            }
+            .instructions-list li::before {
+                counter-increment: step-counter;
+                content: counter(step-counter);
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 30px;
+                height: 30px;
+                background: #ff6b6b;
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+            }
+            .back-button {
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #ff6b6b;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+                margin-bottom: 20px;
+                transition: background-color 0.3s ease;
+            }
+            .back-button:hover {
+                background-color: #ff5252;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <ui:fragment rendered="#{userBean.loggedIn}">
+            <div class="header">
+                <div class="header-content">
+                    <div class="logo">
+                        <i class="fas fa-utensils"></i>
+                        Cooking Master
+                    </div>
+                    <h:form>
+                        <div class="nav-links">
+                            <h:link value="Home" outcome="home" styleClass="nav-link"/>
+                            <h:link value="My Recipes" outcome="my-recipes" styleClass="nav-link"/>
+                            <h:link value="Profile" outcome="profile" styleClass="nav-link"/>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <h:link outcome="home" styleClass="back-button">
+                    <i class="fas fa-arrow-left"></i> Back to Recipes
+                </h:link>
+
+                <div class="recipe-header">
+                    <h1 class="recipe-title">#{recipeBean.selectedRecipe.title}</h1>
+                    <div class="recipe-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-clock"></i>
+                            <span>#{recipeBean.selectedRecipe.cookingTime} mins</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-signal"></i>
+                            <span>#{recipeBean.selectedRecipe.difficulty}</span>
+                        </div>
+                    </div>
+                    <p class="recipe-description">#{recipeBean.selectedRecipe.description}</p>
+                </div>
+
+                <div class="recipe-section">
+                    <h2 class="section-title">Ingredients</h2>
+                    <ul class="ingredients-list">
+                        <ui:repeat value="#{recipeBean.ingredientsList}" var="ingredient">
+                            <li>#{ingredient}</li>
+                        </ui:repeat>
+                    </ul>
+                </div>
+
+                <div class="recipe-section">
+                    <h2 class="section-title">Instructions</h2>
+                    <ol class="instructions-list">
+                        <ui:repeat value="#{recipeBean.instructionsList}" var="instruction">
+                            <li>#{instruction}</li>
+                        </ui:repeat>
+                    </ol>
+                </div>
+            </div>
+        </ui:fragment>
+
+        <ui:fragment rendered="#{!userBean.loggedIn}">
+            <script type="text/javascript">
+                window.location.href = "#{request.contextPath}/login.xhtml";
+            </script>
+        </ui:fragment>
+    </h:body>
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{recipeBean.loadSelectedRecipe}"/>
+    </f:metadata>
+</html> 

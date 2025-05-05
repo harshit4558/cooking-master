@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Cooking Master - Share Your Culinary Journey</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f8f9fa;
+            }
+            .hero-section {
+                background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+                color: white;
+                padding: 100px 20px;
+                text-align: center;
+            }
+            .hero-title {
+                font-size: 3.5em;
+                margin-bottom: 20px;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 20px;
+            }
+            .hero-title i {
+                font-size: 1.2em;
+            }
+            .hero-subtitle {
+                font-size: 1.5em;
+                margin-bottom: 40px;
+                opacity: 0.9;
+            }
+            .cta-button {
+                display: inline-block;
+                padding: 15px 30px;
+                background-color: white;
+                color: #ff6b6b;
+                text-decoration: none;
+                border-radius: 30px;
+                font-weight: bold;
+                transition: transform 0.3s ease;
+            }
+            .cta-button:hover {
+                transform: scale(1.05);
+            }
+            .features-section {
+                padding: 80px 20px;
+                text-align: center;
+            }
+            .feature-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 30px;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            .feature-card {
+                background: white;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                transition: transform 0.3s ease;
+            }
+            .feature-card:hover {
+                transform: translateY(-5px);
+            }
+            .feature-icon {
+                font-size: 2.5em;
+                color: #ff6b6b;
+                margin-bottom: 20px;
+            }
+            .feature-title {
+                font-size: 1.5em;
+                margin-bottom: 15px;
+                color: #333;
+            }
+            .feature-description {
+                color: #666;
+                line-height: 1.6;
+            }
+            .footer {
+                background-color: #333;
+                color: white;
+                text-align: center;
+                padding: 20px;
+                margin-top: 50px;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <div class="hero-section">
+            <h1 class="hero-title">
+                <i class="fas fa-utensils"></i>
+                Welcome to Cooking Master
+            </h1>
+            <p class="hero-subtitle">Your Ultimate Recipe Sharing Platform</p>
+            <h:button value="Get Started" outcome="login" styleClass="cta-button"/>
+        </div>
+
+        <div class="features-section">
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">R</div>
+                    <h2 class="feature-title">Share Recipes</h2>
+                    <p class="feature-description">Create and share your favorite recipes with the world. Add detailed instructions, ingredients, and photos.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">C</div>
+                    <h2 class="feature-title">Join Community</h2>
+                    <p class="feature-description">Connect with fellow food enthusiasts, share tips, and discover new culinary experiences.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">S</div>
+                    <h2 class="feature-title">Rate and Review</h2>
+                    <p class="feature-description">Help others find the best recipes by rating and reviewing dishes you've tried.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>2024 Cooking Master. All rights reserved.</p>
+        </div>
+    </h:body>
+</html> 

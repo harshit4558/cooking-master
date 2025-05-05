@@ -1,0 +1,350 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Add Recipe - Cooking Master</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f8f9fa;
+            }
+            .header {
+                background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+                color: white;
+                padding: 20px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .header-content {
+                max-width: 1200px;
+                margin: 0 auto;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .logo {
+                font-size: 1.5em;
+                font-weight: bold;
+            }
+            .nav-links {
+                display: flex;
+                gap: 20px;
+            }
+            .nav-link {
+                color: white;
+                text-decoration: none;
+                padding: 8px 16px;
+                border-radius: 20px;
+                transition: background-color 0.3s ease;
+            }
+            .nav-link:hover {
+                background-color: rgba(255,255,255,0.2);
+            }
+            .main-content {
+                max-width: 1200px;
+                margin: 40px auto;
+                padding: 0 20px;
+            }
+            .page-title {
+                color: #333;
+                margin-bottom: 30px;
+                font-size: 2em;
+            }
+            .recipe-form {
+                background: white;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .form-group {
+                margin-bottom: 20px;
+            }
+            .form-label {
+                display: block;
+                margin-bottom: 8px;
+                color: #333;
+                font-weight: 500;
+            }
+            .form-input {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 1em;
+            }
+            .form-textarea {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 1em;
+                min-height: 100px;
+                resize: vertical;
+                line-height: 1.5;
+            }
+            .form-select {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 1em;
+                background-color: white;
+            }
+            .form-button {
+                background-color: #ff6b6b;
+                color: white;
+                padding: 12px 24px;
+                border: none;
+                border-radius: 5px;
+                font-size: 1em;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+            .form-button:hover {
+                background-color: #ff5252;
+            }
+            .ingredients-list {
+                margin-top: 10px;
+            }
+            .ingredient-item {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 10px;
+                align-items: center;
+            }
+            .ingredient-input {
+                flex: 1;
+                min-width: 0;
+            }
+            .ingredient-input:first-child {
+                flex: 2;
+            }
+            .remove-ingredient {
+                background-color: #ff6b6b;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                padding: 5px 10px;
+                cursor: pointer;
+            }
+            .add-ingredient {
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                padding: 5px 10px;
+                cursor: pointer;
+                margin-top: 10px;
+            }
+            .form-button-cancel {
+                margin-left: 16px;
+            }
+            .steps-list {
+                margin-top: 10px;
+            }
+            .step-item {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 15px;
+                align-items: flex-start;
+            }
+            .step-number {
+                background-color: #ff6b6b;
+                color: white;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                flex-shrink: 0;
+            }
+            .step-input {
+                flex: 1;
+                min-height: 60px;
+            }
+            .remove-step {
+                background-color: #ff6b6b;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                padding: 5px 10px;
+                cursor: pointer;
+                flex-shrink: 0;
+            }
+            .add-step {
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                padding: 5px 10px;
+                cursor: pointer;
+                margin-top: 10px;
+            }
+            .error-message {
+                color: red;
+                margin-bottom: 15px;
+            }
+            .ask-chef-button {
+                background-color: #4CAF50;
+                color: white;
+                padding: 12px 24px;
+                border: none;
+                border-radius: 5px;
+                font-size: 1em;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .ask-chef-button:hover {
+                background-color: #45a049;
+            }
+            .ask-chef-button i {
+                font-size: 1.2em;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <ui:fragment rendered="#{userBean.loggedIn}">
+            <div class="header">
+                <div class="header-content">
+                    <div class="logo">
+                        <i class="fas fa-utensils"></i>
+                        Cooking Master
+                    </div>
+                    <div class="nav-links">
+                        <h:link value="Home" outcome="home" styleClass="nav-link"/>
+                        <h:link value="My Recipes" outcome="my-recipes" styleClass="nav-link"/>
+                        <h:link value="Profile" outcome="profile" styleClass="nav-link"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <h1 class="page-title">Add New Recipe</h1>
+                
+                <h:link outcome="ask-chef" styleClass="ask-chef-button">
+                    <i class="fas fa-robot"></i>
+                    Ask the Chef
+                </h:link>
+                
+                <div class="recipe-form">
+                    <h:form id="recipeForm">
+                        <h:messages globalOnly="true" styleClass="error-message" style="color: red; margin-bottom: 15px;"/>
+                        
+                        <div class="form-group">
+                            <h:outputLabel for="title" value="Recipe Title" styleClass="form-label"/>
+                            <h:inputText id="title" 
+                                       value="#{recipeBean.title}" 
+                                       styleClass="form-input"
+                                       required="true"
+                                       requiredMessage="Recipe title is required"/>
+                            <h:message for="title" styleClass="error-message"/>
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel for="description" value="Description" styleClass="form-label"/>
+                            <h:inputTextarea id="description" 
+                                           value="#{recipeBean.description}" 
+                                           styleClass="form-textarea"
+                                           required="true"
+                                           requiredMessage="Description is required"/>
+                            <h:message for="description" styleClass="error-message"/>
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel for="cookingTime" value="Cooking Time (minutes)" styleClass="form-label"/>
+                            <h:inputText id="cookingTime" 
+                                       value="#{recipeBean.cookingTime}" 
+                                       styleClass="form-input"
+                                       required="true"
+                                       requiredMessage="Cooking time is required">
+                                <f:validateLongRange minimum="1"/>
+                            </h:inputText>
+                            <h:message for="cookingTime" styleClass="error-message"/>
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel for="difficulty" value="Difficulty Level" styleClass="form-label"/>
+                            <h:selectOneMenu id="difficulty" 
+                                           value="#{recipeBean.difficulty}" 
+                                           styleClass="form-select"
+                                           required="true"
+                                           requiredMessage="Difficulty level is required">
+                                <f:selectItem itemLabel="Select Difficulty" itemValue=""/>
+                                <f:selectItem itemLabel="Easy" itemValue="Easy"/>
+                                <f:selectItem itemLabel="Medium" itemValue="Medium"/>
+                                <f:selectItem itemLabel="Hard" itemValue="Hard"/>
+                            </h:selectOneMenu>
+                            <h:message for="difficulty" styleClass="error-message"/>
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel for="ingredients" value="Ingredients" styleClass="form-label"/>
+                            <h:outputText value="(List each ingredient on a new line)" style="display: block; color: #666; font-size: 0.9em; margin-bottom: 5px;"/>
+                            <h:inputTextarea id="ingredients" styleClass="form-textarea" rows="8" 
+                                value="#{recipeBean.ingredients}"
+                                required="true"
+                                requiredMessage="At least one ingredient is required">
+                                <f:attribute name="placeholder" value="Orange - 3 Whole&#10;Flour - 2 Cups&#10;Sugar - 1/2 Cup"/>
+                            </h:inputTextarea>
+                            <h:message for="ingredients" styleClass="error-message"/>
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel for="instructions" value="Instructions" styleClass="form-label"/>
+                            <h:outputText value="(List each step on a new line)" style="display: block; color: #666; font-size: 0.9em; margin-bottom: 5px;"/>
+                            <h:inputTextarea id="instructions" styleClass="form-textarea" rows="8" 
+                                value="#{recipeBean.instructions}"
+                                required="true"
+                                requiredMessage="Cooking instructions are required">
+                                <f:attribute name="placeholder" value="1. Preheat oven to 350°F&#10;2. Mix flour and sugar in a bowl&#10;3. Add eggs and stir well"/>
+                            </h:inputTextarea>
+                            <h:message for="instructions" styleClass="error-message"/>
+                        </div>
+
+                        <div class="form-group">
+                            <h:commandButton value="Submit" action="#{recipeBean.saveRecipe}" styleClass="form-button"/>
+                            <h:commandButton value="Cancel" action="home" styleClass="form-button form-button-cancel" immediate="true"/>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </ui:fragment>
+
+        <ui:fragment rendered="#{!userBean.loggedIn}">
+            <script type="text/javascript">
+                function validateForm() {
+                    var title = document.querySelector('input[name$=":title"]').value;
+                    var ingredients = document.querySelector('textarea[name$=":ingredients"]').value;
+                    var instructions = document.querySelector('textarea[name$=":instructions"]').value;
+                    
+                    if (!title.trim()) {
+                        alert('Please enter a title for your recipe');
+                        return false;
+                    }
+                    if (!ingredients.trim()) {
+                        alert('Please enter ingredients for your recipe');
+                        return false;
+                    }
+                    if (!instructions.trim()) {
+                        alert('Please enter instructions for your recipe');
+                        return false;
+                    }
+                    return true;
+                }
+            </script>
+        </ui:fragment>
+    </h:body>
+</html> 

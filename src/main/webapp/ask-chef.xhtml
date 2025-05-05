@@ -1,0 +1,350 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Ask the Chef - Cooking Master</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+        <h:outputStylesheet name="css/styles.css"/>
+        <h:outputScript name="js/chef.js" target="head"/>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f8f9fa;
+            }
+            .header {
+                background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+                color: white;
+                padding: 20px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .header-content {
+                max-width: 1200px;
+                margin: 0 auto;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .logo {
+                font-size: 1.5em;
+                font-weight: bold;
+            }
+            .nav-links {
+                display: flex;
+                gap: 20px;
+            }
+            .nav-link {
+                color: white;
+                text-decoration: none;
+                padding: 8px 16px;
+                border-radius: 20px;
+                transition: background-color 0.3s ease;
+            }
+            .nav-link:hover {
+                background-color: rgba(255,255,255,0.2);
+            }
+            .main-content {
+                max-width: 800px;
+                margin: 40px auto;
+                padding: 0 20px;
+            }
+            .page-title {
+                color: #333;
+                margin-bottom: 30px;
+                font-size: 2em;
+                text-align: center;
+            }
+            .chef-container {
+                background: white;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .chef-header {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            .chef-icon {
+                font-size: 3em;
+                color: #4CAF50;
+                margin-bottom: 15px;
+            }
+            .chef-description {
+                color: #666;
+                font-size: 1.1em;
+                line-height: 1.5;
+                margin-bottom: 30px;
+                text-align: center;
+            }
+            .prompt-container {
+                margin-bottom: 30px;
+            }
+            .prompt-label {
+                display: block;
+                margin-bottom: 10px;
+                color: #333;
+                font-weight: 500;
+            }
+            .prompt-input {
+                width: 100%;
+                padding: 15px;
+                border: 2px solid #ddd;
+                border-radius: 8px;
+                font-size: 1.1em;
+                min-height: 120px;
+                resize: vertical;
+                line-height: 1.5;
+                transition: border-color 0.3s ease;
+            }
+            .prompt-input:focus {
+                outline: none;
+                border-color: #4CAF50;
+            }
+            .error-message {
+                color: #dc3545;
+                font-size: 0.95em;
+                margin-top: 8px;
+                display: block;
+                background-color: #fff5f5;
+                padding: 10px;
+                border-radius: 4px;
+                border-left: 4px solid #dc3545;
+            }
+            .prompt-examples {
+                margin-top: 10px;
+                color: #666;
+                font-size: 0.9em;
+            }
+            .generate-button {
+                background-color: #4CAF50;
+                color: white;
+                padding: 15px 30px;
+                border: none;
+                border-radius: 8px;
+                font-size: 1.1em;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+            }
+            .generate-button:hover {
+                background-color: #45a049;
+            }
+            .generate-button i {
+                font-size: 1.2em;
+            }
+            .back-button {
+                display: inline-block;
+                color: #666;
+                text-decoration: none;
+                margin-bottom: 20px;
+                transition: color 0.3s ease;
+            }
+            .back-button:hover {
+                color: #333;
+            }
+            .back-button i {
+                margin-right: 5px;
+            }
+            .recipe-output {
+                margin-top: 2rem;
+                padding: 1.5rem;
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                white-space: pre-wrap;
+            }
+            
+            .loading {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                margin-top: 2rem;
+                color: #666;
+                text-align: center;
+            }
+            
+            .loading i {
+                font-size: 2em;
+                margin-bottom: 1rem;
+                color: #4CAF50;
+                animation: bounce 1s infinite;
+            }
+            
+            .loading-messages {
+                position: relative;
+                height: 2em;
+                overflow: hidden;
+            }
+            
+            .loading-message {
+                position: absolute;
+                width: 100%;
+                text-align: center;
+                opacity: 0;
+                animation: fadeInOut 1.5s infinite;
+                color: #333;
+                font-size: 1.2em;
+                padding: 0 1rem;
+            }
+            
+            @keyframes fadeInOut {
+                0%, 100% { opacity: 0; }
+                50% { opacity: 1; }
+            }
+            
+            .loading-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.7);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+            }
+            
+            .loading-content {
+                background: white;
+                padding: 2rem;
+                border-radius: 10px;
+                text-align: center;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                min-width: 300px;
+            }
+            
+            .loading-icon {
+                font-size: 3em;
+                color: #4CAF50;
+                margin-bottom: 1.5rem;
+                animation: bounce 1s infinite;
+            }
+            
+            .loading-messages {
+                position: relative;
+                height: 3em;
+                overflow: hidden;
+                margin-top: 1rem;
+            }
+            
+            .loading-message {
+                position: absolute;
+                width: 100%;
+                text-align: center;
+                opacity: 0;
+                animation: fadeInOut 1.5s infinite;
+                color: #333;
+                font-size: 1.2em;
+                padding: 0 1rem;
+            }
+            
+            @keyframes bounce {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-10px); }
+            }
+            
+            @keyframes fadeInOut {
+                0%, 100% { opacity: 0; }
+                50% { opacity: 1; }
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <ui:fragment rendered="#{userBean.loggedIn}">
+            <div class="header">
+                <div class="header-content">
+                    <div class="logo">
+                        <i class="fas fa-utensils"></i>
+                        Cooking Master
+                    </div>
+                    <div class="nav-links">
+                        <h:link value="Home" outcome="home" styleClass="nav-link"/>
+                        <h:link value="My Recipes" outcome="my-recipes" styleClass="nav-link"/>
+                        <h:link value="Profile" outcome="profile" styleClass="nav-link"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <h:link outcome="add-recipe" styleClass="back-button">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Add Recipe
+                </h:link>
+                
+                <h1 class="page-title">Ask the Chef</h1>
+                
+                <div class="chef-container">
+                    <div class="chef-header">
+                        <i class="fas fa-robot chef-icon"></i>
+                        <h2>Let AI Create Your Recipe</h2>
+                    </div>
+                    
+                    <p class="chef-description">
+                        Describe the recipe you want to create. Be as specific as possible about ingredients, 
+                        cooking style, dietary restrictions, or any other preferences you have.
+                    </p>
+                    
+                    <h:form id="recipeForm">
+                        <div class="prompt-container">
+                            <label class="prompt-label">What kind of recipe would you like to create?</label>
+                            <h:inputTextarea id="prompt"
+                                           value="#{chefBean.prompt}"
+                                           styleClass="prompt-input" 
+                                           placeholder="Example: I want a healthy vegetarian dinner recipe that's quick to make and uses seasonal vegetables. I prefer Mediterranean style cooking."
+                                           required="true"
+                                           requiredMessage="Please enter a prompt for your recipe"/>
+                            <h:message for="prompt" styleClass="error-message"/>
+                            <div class="prompt-examples">
+                                <p>Try being specific about:</p>
+                                <ul>
+                                    <li>Cuisine type (Italian, Indian, Mexican, etc.)</li>
+                                    <li>Dietary preferences (vegetarian, vegan, gluten-free, etc.)</li>
+                                    <li>Cooking time constraints</li>
+                                    <li>Available ingredients</li>
+                                    <li>Skill level</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <h:commandButton value="Generate Recipe"
+                                       action="#{chefBean.generateRecipe}"
+                                       styleClass="generate-button">
+                            <f:ajax execute="@form" render="@form messages" onevent="handleAjax"/>
+                        </h:commandButton>
+                        
+                        <h:panelGroup id="messages" style="margin-top: 20px;">
+                            <h:messages globalOnly="true" styleClass="error-message" style="font-size: 1.2em; text-align: center;"/>
+                        </h:panelGroup>
+                    </h:form>
+
+                    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+                        <div class="loading-content">
+                            <i class="fas fa-utensils loading-icon"></i>
+                            <div class="loading-messages">
+                                <p class="loading-message">Chef is thinking...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ui:fragment>
+
+        <ui:fragment rendered="#{!userBean.loggedIn}">
+            <script type="text/javascript">
+                window.location.href = "#{request.contextPath}/login.xhtml";
+            </script>
+        </ui:fragment>
+    </h:body>
+</html> 

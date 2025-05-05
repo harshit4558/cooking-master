@@ -1,0 +1,339 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>My Recipes - Cooking Master</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f8f9fa;
+            }
+            .header {
+                background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+                color: white;
+                padding: 15px 20px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .header-content {
+                max-width: 1200px;
+                margin: 0 auto;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 20px;
+                padding: 0 20px;
+            }
+            .logo {
+                font-size: 1.8em;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                flex-shrink: 0;
+                min-width: 200px;
+            }
+            .logo i {
+                font-size: 1.4em;
+            }
+            .search-container {
+                flex-grow: 1;
+                max-width: 500px;
+                margin: 0 auto;
+                position: relative;
+            }
+            .search-form {
+                display: flex;
+                gap: 10px;
+                width: 100%;
+                background-color: rgba(255, 255, 255, 0.2);
+                border-radius: 30px;
+                padding: 5px 15px;
+                align-items: center;
+            }
+            .search-input {
+                flex-grow: 1;
+                padding: 8px 15px;
+                border: none;
+                background: none;
+                color: white;
+                font-size: 1em;
+                width: 100%;
+            }
+            .search-input::placeholder {
+                color: rgba(255, 255, 255, 0.7);
+            }
+            .search-input:focus {
+                outline: none;
+            }
+            .search-button {
+                background: none;
+                border: none;
+                color: white;
+                cursor: pointer;
+                padding: 8px;
+                border-radius: 50%;
+                transition: background-color 0.3s ease;
+                flex-shrink: 0;
+            }
+            .search-button:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+            .search-results {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                margin-top: 5px;
+                max-height: 300px;
+                overflow-y: auto;
+                z-index: 1000;
+            }
+            .search-result-item {
+                padding: 10px 15px;
+                border-bottom: 1px solid #eee;
+                cursor: pointer;
+                transition: background-color 0.2s ease;
+            }
+            .search-result-item:last-child {
+                border-bottom: none;
+            }
+            .search-result-item:hover {
+                background-color: #f8f9fa;
+            }
+            .search-result-title {
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 5px;
+            }
+            .search-result-meta {
+                font-size: 0.9em;
+                color: #666;
+            }
+            .no-results {
+                padding: 15px;
+                text-align: center;
+                color: #666;
+            }
+            .nav-links {
+                display: flex;
+                gap: 20px;
+                flex-shrink: 0;
+                min-width: 200px;
+                justify-content: flex-end;
+            }
+            .nav-link {
+                color: white;
+                text-decoration: none;
+                padding: 8px 16px;
+                border-radius: 20px;
+                transition: background-color 0.3s ease;
+                cursor: pointer;
+            }
+            .nav-link:hover {
+                background-color: rgba(255,255,255,0.2);
+            }
+            .main-content {
+                max-width: 1200px;
+                margin: 40px auto;
+                padding: 0 20px;
+            }
+            .page-title {
+                color: #333;
+                margin-bottom: 30px;
+                font-size: 2em;
+            }
+            .recipes-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 30px;
+            }
+            .recipe-card-container {
+                position: relative;
+            }
+            .recipe-card {
+                background: white;
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                transition: transform 0.3s ease;
+                padding: 20px;
+                text-decoration: none;
+                color: inherit;
+                display: block;
+            }
+            .recipe-card:hover {
+                transform: translateY(-5px);
+            }
+            .recipe-title {
+                font-size: 1.4em;
+                color: #333;
+                margin-bottom: 10px;
+                padding-right: 30px;
+                text-decoration: none;
+            }
+            .recipe-description {
+                color: #666;
+                font-size: 1em;
+                line-height: 1.5;
+                margin-bottom: 15px;
+                text-decoration: none;
+            }
+            .recipe-meta {
+                display: flex;
+                justify-content: space-between;
+                color: #666;
+                font-size: 0.9em;
+            }
+            .recipe-rating {
+                color: #ff6b6b;
+            }
+            .recipe-actions {
+                display: flex;
+                gap: 10px;
+                margin-top: 15px;
+            }
+            .edit-button, .delete-button {
+                padding: 8px 15px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 0.9em;
+                transition: background-color 0.3s ease;
+                text-decoration: none;
+                display: inline-block;
+            }
+            .edit-button {
+                background-color: #4CAF50;
+                color: white;
+            }
+            .edit-button:hover {
+                background-color: #45a049;
+            }
+            .delete-button {
+                background-color: #dc3545;
+                color: white;
+            }
+            .delete-button:hover {
+                background-color: #c82333;
+            }
+            .add-recipe-button {
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                background-color: #ff6b6b;
+                color: white;
+                padding: 15px 30px;
+                border-radius: 30px;
+                text-decoration: none;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                transition: transform 0.3s ease;
+            }
+            .add-recipe-button:hover {
+                transform: scale(1.05);
+            }
+            .no-recipes {
+                text-align: center;
+                color: #666;
+                font-size: 1.2em;
+                margin-top: 50px;
+            }
+            .edit-icon {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                color: #666;
+                cursor: pointer;
+                transition: color 0.3s ease;
+                font-size: 1.2em;
+                z-index: 1;
+            }
+            .edit-icon:hover {
+                color: #ff6b6b;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <ui:fragment rendered="#{userBean.loggedIn}">
+            <div class="header">
+                <div class="header-content">
+                    <div class="logo">
+                        <i class="fas fa-utensils"></i>
+                        Cooking Master
+                    </div>
+                    
+                    <div class="nav-links">
+                        <h:link value="Home" outcome="home" styleClass="nav-link"/>
+                        <h:link value="My Recipes" outcome="my-recipes" styleClass="nav-link"/>
+                        <h:link value="Profile" outcome="profile" styleClass="nav-link"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <h1 class="page-title">My Recipes</h1>
+                
+                <div class="recipes-grid" id="recipesGrid">
+                    <ui:repeat value="#{recipeBean.myRecipes}" var="recipe">
+                        <div class="recipe-card-container">
+                            <h:link outcome="edit-recipe" styleClass="edit-icon">
+                                <f:param name="id" value="#{recipe.recipeId}"/>
+                                <i class="fas fa-pencil-alt"></i>
+                            </h:link>
+                            <h:link outcome="recipe-detail" styleClass="recipe-card">
+                                <f:param name="id" value="#{recipe.recipeId}"/>
+                                <h2 class="recipe-title">#{recipe.title}</h2>
+                                <div class="recipe-author">User #{recipe.userId}</div>
+                                <p class="recipe-description">#{recipe.description}</p>
+                                <div class="recipe-meta">
+                                    <span class="recipe-rating">#{recipe.difficulty}</span>
+                                    <span>#{recipe.cookingTime} mins</span>
+                                </div>
+                            </h:link>
+                        </div>
+                    </ui:repeat>
+                </div>
+                
+                <ui:fragment rendered="#{empty recipeBean.myRecipes}">
+                    <div class="no-recipes">
+                        <p>You haven't uploaded any recipes yet.</p>
+                    </div>
+                </ui:fragment>
+            </div>
+
+            <h:link value="Add Recipe" outcome="add-recipe" styleClass="add-recipe-button"/>
+
+            <script type="text/javascript">
+                // Function to refresh the recipe list
+                function refreshRecipes() {
+                    var recipesGrid = document.getElementById('recipesGrid');
+                    if (recipesGrid) {
+                        // Trigger a partial view update
+                        var event = new CustomEvent('refreshRecipes');
+                        document.dispatchEvent(event);
+                    }
+                }
+
+                // Listen for recipe deletion
+                document.addEventListener('recipeDeleted', function() {
+                    refreshRecipes();
+                });
+            </script>
+        </ui:fragment>
+
+        <ui:fragment rendered="#{!userBean.loggedIn}">
+            <script type="text/javascript">
+                window.location.href = "#{request.contextPath}/login.xhtml";
+            </script>
+        </ui:fragment>
+    </h:body>
+</html> 
